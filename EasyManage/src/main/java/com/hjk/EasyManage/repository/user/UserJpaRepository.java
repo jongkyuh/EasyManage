@@ -3,7 +3,12 @@ package com.hjk.EasyManage.repository.user;
 import com.hjk.EasyManage.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserJpaRepository extends JpaRepository<Users, Long> {
-    boolean existsByUsername(String username);
+    boolean existsByUsername(String username);  // 유저이름으로 존재 유무
+    Optional<Users> findByUsername(String username);    // 유저이름으로 유저찾기
+
+
 
 }

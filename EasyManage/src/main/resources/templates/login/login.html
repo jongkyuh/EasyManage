@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인화면</title>
+</head>
+<body>
+
+<form method="post" action="/login" th:object = "${loginForm}" align = center>
+    <h1>로그인</h1>
+    <div>
+        <label for="username"></label>
+        <input type="text" id="username" th:field = "*{username}">
+        <label th:text = "${notFoundErr}"></label>
+    </div>
+    <div>
+        <label for="password"></label>
+        <input type="password" id = "password" th:field = "*{password}">
+        <label th:text = "${wrongPasswordErr}"></label>
+    </div>
+    <button type="submit">로그인하기</button>
+    <button type="button" id="signup">회원가입하기</button>
+</form>
+
+<script>
+    document.getElementById("signup").addEventListener("click", function (){
+       window.location.href = "/user";
+    });
+</script>
+</body>
+</html>

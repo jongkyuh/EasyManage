@@ -1,7 +1,10 @@
 package com.hjk.EasyManage.controller;
 
+import com.hjk.EasyManage.dto.user.LoginUserDto;
 import com.hjk.EasyManage.dto.user.SignUpUserDto;
+import com.hjk.EasyManage.exception.user.UserAlreadyExistsException;
 import com.hjk.EasyManage.service.user.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,10 +22,12 @@ public class UserController {
 
     // 회원가입 페이지 이동
     @GetMapping("")
-    public String createSignUp(Model model){
+    public String createSignUp(HttpSession httpSession, Model model) {
+
         model.addAttribute("signupForm", new SignUpUserDto());
         return "user/signUp";
     }
+
 
     // 회원가입
     @PostMapping("/signup")
@@ -30,16 +35,15 @@ public class UserController {
         if(bindingResult.hasErrors()){
             return "user/signUp";
         }
-
         try{
             userService.save(signUpUserDto);
-
-        }catch (IllegalArgumentException e){
-            bindingResult.rejectValue("username","duplicate",e.getMessage());
-            return "user/signup";
+        }catch (UserAlreadyExistsException e){
+            model.addAttribute("alreadyExistsErr",e.getMessage());
+            return "user/signUp";
         }
 
-        return "main";
+        model.addAttribute("loginForm",new LoginUserDto());
+        return "login/login";
 
     }
 

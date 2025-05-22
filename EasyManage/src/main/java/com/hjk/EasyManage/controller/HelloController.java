@@ -1,5 +1,6 @@
 package com.hjk.EasyManage.controller;
 
+import com.hjk.EasyManage.dto.user.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,7 @@ public class HelloController {
 
     @GetMapping("/")
     public String start(Model model){
-        model.addAttribute("helloMessage", "안녕하세요");
-        return "main";
+        model.addAttribute("loginForm", new LoginUserDto());
+        return "login/login";
     }
 }
