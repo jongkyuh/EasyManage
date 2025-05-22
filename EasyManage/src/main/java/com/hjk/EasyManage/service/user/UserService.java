@@ -16,6 +16,10 @@ public class UserService {
     private final UserJpaRepository userJpaRepository;
 
     public void save(SignUpUserDto signUpUserDto){
+
+        if(userJpaRepository.existsByUsername(signUpUserDto.getUsername())){
+            throw new IllegalArgumentException("이미 가입된 회원입니다.");
+        }
         Users user = new Users();
         user.setUsername(signUpUserDto.getUsername());
         user.setPassword(signUpUserDto.getPassword());

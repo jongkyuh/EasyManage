@@ -2,9 +2,11 @@ package com.hjk.EasyManage.controller;
 
 import com.hjk.EasyManage.dto.user.SignUpUserDto;
 import com.hjk.EasyManage.service.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -24,8 +26,23 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/signup")
-    public String signup(@ModelAttribute SignUpUserDto signUpUserDto, Model model){
-        userService.save(signUpUserDto);
+    public String signup(@Valid @ModelAttribute("signupForm") SignUpUserDto signUpUserDto, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            return "user/signUp";
+        }
+
+        try{
+            userService.save(signUpUserDto);
+
+        }catch (IllegalArgumentException e){
+            bindingResult.rejectValue("username","duplicate",e.getMessage());
+            return "user/signup";
+        }
+
         return "main";
+
     }
+
+    @PostMapping("/login")
+    public String
 }
