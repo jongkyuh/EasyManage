@@ -5,15 +5,10 @@
     <title>메인페이지</title>
 </head>
 <body>
-<div>
-    세션 아이디: <span th:text="${session}">세션아이디</span>
-</div>
+<div th:replace="layout/header::headerFragment"></div>
 
 <h1 align="center">메인페이지</h1>
-<form action="user/login">
 
-</form>
-<a href="/user">회원가입페이지이동</a>
-<a href="/session/check">세션체크</a>
+<!--<a href="/session/check">세션체크</a>-->
 </body>
 </html>

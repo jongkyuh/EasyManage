@@ -4,6 +4,7 @@ import com.hjk.EasyManage.dto.user.LoginUserDto;
 import com.hjk.EasyManage.dto.user.SignUpUserDto;
 import com.hjk.EasyManage.exception.user.UserAlreadyExistsException;
 import com.hjk.EasyManage.service.user.UserService;
+import com.hjk.EasyManage.service.user.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,0 +1,13 @@
+<!-- templates/fragments/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="headerFragment">
+    <div>
+        회원아이디: <span th:text="${session.loginUser}">세션아이디</span>
+        <a href="/login/logout">로그아웃</a>
+    </div>
+    <hr>
+</div>
+</body>
+</html>

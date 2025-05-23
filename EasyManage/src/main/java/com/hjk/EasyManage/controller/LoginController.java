@@ -5,15 +5,13 @@ import com.hjk.EasyManage.entity.Users;
 import com.hjk.EasyManage.exception.login.UserNotFoundException;
 import com.hjk.EasyManage.exception.login.WrongPasswordException;
 import com.hjk.EasyManage.service.login.LoginService;
+import com.hjk.EasyManage.service.login.LoginServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,7 +41,14 @@ public class LoginController {
         }
 
         model.addAttribute("session", httpSession.getAttribute("loginUser"));
-        return "main";
+        return "redirect:main";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        httpSession.invalidate();
+        return "redirect:/";
+
     }
 
 }
