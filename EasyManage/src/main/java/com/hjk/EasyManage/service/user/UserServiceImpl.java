@@ -33,10 +33,16 @@ public class UserServiceImpl implements UserService {
         userJpaRepository.save(user);
     }
 
-    // 회원아이디로 유저찾기
+    // 회원이름으로 유저찾기
     @Override
     public Users findByUsername(String username){
         return userJpaRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+    }
+
+    @Override
+    public Users findByUserId(Long id) {
+        return userJpaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
     }
 

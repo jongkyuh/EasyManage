@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인화면</title>
+
 </head>
 <body>
 
 <form method="post" action="/login" th:object = "${loginForm}" align = center>
     <h1>로그인</h1>
     <div>
-        <label for="username"></label>
+        <label for="username">아이디:</label>
         <input type="text" id="username" th:field = "*{username}">
         <label th:text = "${notFoundErr}"></label>
     </div>
     <div>
-        <label for="password"></label>
+        <label for="password">비밀번호:</label>
         <input type="password" id = "password" th:field = "*{password}">
         <label th:text = "${wrongPasswordErr}"></label>
     </div>

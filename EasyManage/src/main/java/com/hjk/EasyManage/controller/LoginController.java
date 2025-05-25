@@ -32,6 +32,7 @@ public class LoginController {
         try {
             Users loginUser = loginService.login(loginUserDto);
             httpSession.setAttribute("loginUser", loginUser.getUsername());
+            httpSession.setAttribute("loginId", loginUser.getId());
         }catch (UserNotFoundException e){
             model.addAttribute("notFoundErr", e.getMessage());
             return "login/login";

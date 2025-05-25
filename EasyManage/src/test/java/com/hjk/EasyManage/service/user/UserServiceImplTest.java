@@ -55,4 +55,9 @@ class UserServiceImplTest {
             userServiceImpl.save(signUpUserDto);
         });
     }
+
+    @Test
+    void 회원이름으로찾기(){
+
+    }
 }

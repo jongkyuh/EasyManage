@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo-List</title>
+</head>
+<body>
+<form method="post" th:action = "@{/todo/inserttodo}"th:object = "${todoForm}">
+    <div>
+        <label>내용:</label>
+        <input type="text" th:field = "*{content}">
+    </div>
+    <div>
+        <label>내용:</label>
+        <input type= datetime-local th:field = "*{finishAt}">
+    </div>
+    <button type="submit">등록하기</button>
+</form>
+<table border="1">
+    <thead>
+    <tr>
+        <td>내용</td>
+        <td>여부</td>
+        <td>완료일자</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "todo : ${todoViewDto}">
+        <td th:text="${todo.content}"></td>
+        <td th:text="${todo.completed}"></td>
+        <td th:text="${todo.finishAt}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

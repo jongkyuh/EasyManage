@@ -7,5 +7,9 @@ public interface UserService {
 
     void save(SignUpUserDto signUpUserDto); // 유저등록
 
-    Users findByUsername(String username);  // 유저찾기
+    Users findByUsername(String username);  // 유저이름으로 유저찾기
+
+    Users findByUserId(Long id);    // 유저아이디로 유저찾기
+
+
 }
