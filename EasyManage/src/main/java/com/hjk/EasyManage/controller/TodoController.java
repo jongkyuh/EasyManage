@@ -10,10 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +32,7 @@ public class TodoController {
             return "redirect:/";
         }
 
-        List<Todo> todoList = todoService.findByUserId((Long) httpSession.getAttribute("loginId"));
+        List<Todo> todoList = todoService.findByUser_IdOOrderByFinishAt((Long) httpSession.getAttribute("loginId"));
 
         List<TodoViewDto> todoViewDto = todoList.stream()
                 .map(todo -> {
@@ -62,5 +59,12 @@ public class TodoController {
         return "redirect:/todo";
 
 
+    }
+
+    @PostMapping("/changecompleted/{todoId}")
+    public String changeCompleted(@PathVariable("todoId") Long todoId){
+        todoService.completedChange(todoId);
+
+        return "redirect:/todo";
     }
 }

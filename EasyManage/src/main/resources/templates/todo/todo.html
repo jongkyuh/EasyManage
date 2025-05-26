@@ -21,7 +21,8 @@
     <tr>
         <td>내용</td>
         <td>여부</td>
-        <td>완료일자</td>
+        <td>일자</td>
+        <td>완료여부</td>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +30,11 @@
         <td th:text="${todo.content}"></td>
         <td th:text="${todo.completed}"></td>
         <td th:text="${todo.finishAt}"></td>
+        <td>
+            <form th:action = "@{/todo/changecompleted/{todoId}(todoId=${todo.id})}" th:method = "post">
+                <button type="submit" th:text = "${todo.completed} ? '미완료' : '완료'"></button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface TodoService {
 
-    List<Todo> findByUserId(Long userId);
+    List<Todo> findByUser_IdOOrderByFinishAt(Long userId);
 
     void save(TodoRequest todoRequest, Long userId);
+
+    void completedChange(Long todoId);
 }

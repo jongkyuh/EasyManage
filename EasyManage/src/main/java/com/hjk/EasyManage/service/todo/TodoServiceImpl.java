@@ -7,11 +7,13 @@ import com.hjk.EasyManage.repository.todo.TodoJpaRepository;
 import com.hjk.EasyManage.repository.user.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TodoServiceImpl implements TodoService{
 
     private final TodoJpaRepository todoJpaRepository;
@@ -19,9 +21,9 @@ public class TodoServiceImpl implements TodoService{
 
 
     @Override
-    public List<Todo> findByUserId(Long userId) {
+    public List<Todo> findByUser_IdOOrderByFinishAt(Long userId) {
 
-        return todoJpaRepository.findByUser_Id(userId);
+        return todoJpaRepository.findByUser_IdOrderByFinishAt(userId);
     }
 
     @Override
@@ -37,5 +39,13 @@ public class TodoServiceImpl implements TodoService{
 
         todoJpaRepository.save(todo);
 
+    }
+
+    // todo 여부 변경하기
+    @Override
+    public void completedChange(Long todoId) {
+        // 변경감지 통해 변경하기
+        Todo todo = todoJpaRepository.findById(todoId).orElseThrow(() -> new IllegalArgumentException("해당 목록 없음!!"));
+        todo.setCompleted(!todo.isCompleted());
     }
 }
