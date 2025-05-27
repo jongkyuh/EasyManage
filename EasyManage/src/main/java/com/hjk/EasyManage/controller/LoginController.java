@@ -35,9 +35,11 @@ public class LoginController {
             httpSession.setAttribute("loginId", loginUser.getId());
         }catch (UserNotFoundException e){
             model.addAttribute("notFoundErr", e.getMessage());
+            System.out.println("없는 아이디");
             return "login/login";
         }catch (WrongPasswordException e){
             model.addAttribute("wrongPasswordErr", e.getMessage());
+            System.out.println("비밀번호틀림");
             return "login/login";
         }
 
