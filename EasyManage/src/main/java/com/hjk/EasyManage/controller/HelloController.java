@@ -15,6 +15,7 @@ public class HelloController {
     public String start(Model model){
         model.addAttribute("loginForm", new LoginUserDto());
         return "login/login";
+//        return "jun"
     }
 
     @GetMapping("/main")
