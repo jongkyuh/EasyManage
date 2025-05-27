@@ -11,7 +11,9 @@ public interface TodoService {
 
     List<Todo> findByUser_IdOOrderByFinishAt(Long userId);
 
-    void save(TodoRequest todoRequest, Long userId);
+    Todo save(TodoRequest todoRequest, Long userId);
 
     void completedChange(Long todoId);
+
+    void deleteTodo(Long todoId);
 }

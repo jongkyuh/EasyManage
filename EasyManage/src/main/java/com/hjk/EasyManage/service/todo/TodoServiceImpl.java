@@ -27,7 +27,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public void save(TodoRequest todoRequest, Long userId) {
+    public Todo save(TodoRequest todoRequest, Long userId) {
         // 1. 유저아이디를 통한 조회 방법
         Users getUser = userJpaRepository.findById(userId).get();
 
@@ -37,7 +37,7 @@ public class TodoServiceImpl implements TodoService{
         todo.setContent(todoRequest.getContent());
         todo.setFinishAt(todoRequest.getFinishAt());
 
-        todoJpaRepository.save(todo);
+        return todoJpaRepository.save(todo);
 
     }
 
@@ -47,5 +47,11 @@ public class TodoServiceImpl implements TodoService{
         // 변경감지 통해 변경하기
         Todo todo = todoJpaRepository.findById(todoId).orElseThrow(() -> new IllegalArgumentException("해당 목록 없음!!"));
         todo.setCompleted(!todo.isCompleted());
+    }
+
+    // todo 삭제
+    @Override
+    public void deleteTodo(Long todoId) {
+        todoJpaRepository.deleteById(todoId);
     }
 }

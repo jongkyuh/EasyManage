@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     // 유저생성
     @Override
-    public void save(SignUpUserDto signUpUserDto){
+    public Users save(SignUpUserDto signUpUserDto){
 
         if(userJpaRepository.existsByUsername(signUpUserDto.getUsername())){
             throw new UserAlreadyExistsException();
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(signUpUserDto.getPassword()));
         user.setCreateAt(LocalDateTime.now());
         user.setRole(Role.BASIC);
-        userJpaRepository.save(user);
+        return userJpaRepository.save(user);
     }
 
     // 회원이름으로 유저찾기

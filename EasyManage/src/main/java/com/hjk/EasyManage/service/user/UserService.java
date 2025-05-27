@@ -5,7 +5,7 @@ import com.hjk.EasyManage.entity.Users;
 
 public interface UserService {
 
-    void save(SignUpUserDto signUpUserDto); // 유저등록
+    Users save(SignUpUserDto signUpUserDto); // 유저등록
 
     Users findByUsername(String username);  // 유저이름으로 유저찾기
 

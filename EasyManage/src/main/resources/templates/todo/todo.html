@@ -28,13 +28,20 @@
     <tbody>
     <tr th:each = "todo : ${todoViewDto}">
         <td th:text="${todo.content}"></td>
-        <td th:text="${todo.completed}"></td>
+        <td th:text="${todo.completed} ? '완료' : '미완료'" th:style = "${todo.completed} ? 'background-color: #d1ffd1;' : 'background-color: #ffd1d1;'"></td>
         <td th:text="${todo.finishAt}"></td>
         <td>
             <form th:action = "@{/todo/changecompleted/{todoId}(todoId=${todo.id})}" th:method = "post">
                 <button type="submit" th:text = "${todo.completed} ? '미완료' : '완료'"></button>
             </form>
         </td>
+        <td>
+            <form th:action = "@{/todo/deletetodo/{todoId}(todoId=${todo.id})}" th:method = "post">
+                <button type="submit">삭제</button>
+            </form>
+
+        </td>
+
     </tr>
     </tbody>
 </table>
