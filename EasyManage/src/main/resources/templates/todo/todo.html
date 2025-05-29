@@ -41,9 +41,75 @@
             </form>
 
         </td>
+        <td>
+            <button class="complete-change-btn" th:data-id="${todo.id}" th:text="${todo.completed ? '비동기완료':'동기완료'}"></button>
+        </td>
+        <td>
+            <button class="delete-btn" th:data-id="${todo.id}" th:text="삭제"></button>
+        </td>
 
     </tr>
     </tbody>
 </table>
+
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+     // 완료여부 변경
+     document.querySelectorAll(".complete-change-btn").forEach(button => {
+         button.addEventListener("click", async () => {
+             const todoId = button.dataset.id;
+
+             const response = await fetch(`/todo/api/changecompleted/${todoId}`,{
+                 method: 'POST',
+                 headers: {
+                     'X-Requested-With': 'XMLHttpRequest'
+                 }
+             });
+
+             if(response.ok){
+                 // location.reload();
+                 const statusCell = button.closest('tr').querySelector('td:nth-child(2)');
+                 const isCompleted = statusCell.textContent.trim() === '완료';
+
+                 statusCell.textContent = isCompleted ? '미완료' : '완료';
+                 statusCell.style.backgroundColor = isCompleted ? '#ffd1d1' : '#d1ffd1';
+
+                 // 버튼은 반대로
+                 button.textContent = isCompleted ? '완료' : '미완료';
+
+             }else{
+                 alert("완료 여부 변경 실패");
+             }
+
+         });
+     });
+
+
+     // 삭제
+     document.querySelectorAll(".delete-btn").forEach(button => {
+         // 버튼에 이벤트 추가
+         button.addEventListener("click", async () => {
+            const todoId = button.dataset.id;
+
+            const response = await fetch(`/todo/api/deletetodo/${todoId}`,{
+               method: 'POST',
+               headers: {
+                   'X-Requested-With': 'XMLHttpRequest'
+               }
+            });
+
+             if (response.ok) {
+                 const row = button.closest('tr');
+                 row.remove();
+             } else {
+                 alert("삭제 실패");
+             }
+         });
+
+
+     });
+
+ });
+</script>
 </body>
 </html>
