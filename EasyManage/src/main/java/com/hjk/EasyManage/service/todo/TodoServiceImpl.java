@@ -1,8 +1,12 @@
 package com.hjk.EasyManage.service.todo;
 
 import com.hjk.EasyManage.dto.todo.TodoRequest;
+import com.hjk.EasyManage.dto.todo.TodoUpdateDto;
+import com.hjk.EasyManage.dto.todo.TodoViewDto;
+import com.hjk.EasyManage.dto.todo.TodoWithUserResponse;
 import com.hjk.EasyManage.entity.Todo;
 import com.hjk.EasyManage.entity.Users;
+import com.hjk.EasyManage.exception.todo.NotHasTodoException;
 import com.hjk.EasyManage.repository.todo.TodoJpaRepository;
 import com.hjk.EasyManage.repository.user.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +59,44 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void deleteTodo(Long todoId) {
         todoJpaRepository.deleteById(todoId);
+    }
+
+    // 단순 전체 조회, 테스트용
+    @Override
+    public List<TodoWithUserResponse> findAll() {
+        List<Todo> all = todoJpaRepository.findAll();
+
+        List<TodoWithUserResponse> collect = all.stream().map(todo -> {
+            TodoWithUserResponse dto = new TodoWithUserResponse();
+            dto.setId(todo.getId());
+            dto.setUsername(todo.getUser().getUsername());
+            return dto;
+        }).collect(Collectors.toList());
+        return collect;
+    }
+
+    // todoId로 해당 todoList가져오기
+    @Override
+    public TodoViewDto findByTodoIdWithLoginId(Long todoId, Long userId) {
+        Todo getTodo = todoJpaRepository.findById(todoId)
+                .orElseThrow(() -> new NotHasTodoException());
+
+        if(!userId.equals(getTodo.getUser().getId())) throw new IllegalArgumentException("작성한 유저가 아니면 수정할 수 없습니다.");
+
+        TodoViewDto todoViewDto = new TodoViewDto();
+        todoViewDto.setId(getTodo.getId());
+        todoViewDto.setContent(getTodo.getContent());
+        todoViewDto.setCompleted(getTodo.isCompleted());
+        todoViewDto.setFinishAt(getTodo.getFinishAt());
+        return todoViewDto;
+    }
+
+    @Override
+    public void updateTodo(TodoUpdateDto todoUpdateDto) {
+        Long todoId = todoUpdateDto.getId();
+        Todo getTodo = todoJpaRepository.findById(todoId).orElseThrow(() -> new NotHasTodoException());
+
+        getTodo.setContent(todoUpdateDto.getContent());
+        getTodo.setFinishAt(todoUpdateDto.getFinishAt());
     }
 }

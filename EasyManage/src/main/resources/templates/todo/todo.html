@@ -31,21 +31,15 @@
         <td th:text="${todo.completed} ? '완료' : '미완료'" th:style = "${todo.completed} ? 'background-color: #d1ffd1;' : 'background-color: #ffd1d1;'"></td>
         <td th:text="${todo.finishAt}"></td>
         <td>
-            <form th:action = "@{/todo/changecompleted/{todoId}(todoId=${todo.id})}" th:method = "post">
-                <button type="submit" th:text = "${todo.completed} ? '미완료' : '완료'"></button>
-            </form>
-        </td>
-        <td>
-            <form th:action = "@{/todo/deletetodo/{todoId}(todoId=${todo.id})}" th:method = "post">
-                <button type="submit">삭제</button>
-            </form>
-
-        </td>
-        <td>
             <button class="complete-change-btn" th:data-id="${todo.id}" th:text="${todo.completed ? '비동기완료':'동기완료'}"></button>
         </td>
         <td>
             <button class="delete-btn" th:data-id="${todo.id}" th:text="삭제"></button>
+        </td>
+        <td>
+            <a th:href="@{/todo/update/{todoId}(todoId=${todo.id})}">
+                <button type="button">수정</button>
+            </a>
         </td>
 
     </tr>

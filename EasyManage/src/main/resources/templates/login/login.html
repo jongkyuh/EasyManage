@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인화면</title>
+    <link rel="stylesheet" th:href="@{/css/login/login.css}">
 
 </head>
 <body>
@@ -23,7 +24,7 @@
     <button type="button" id="signup">회원가입하기</button>
 </form>
 
-<script>ㅌ
+<script>
     document.getElementById("signup").addEventListener("click", function (){
        window.location.href = "/user";
     });

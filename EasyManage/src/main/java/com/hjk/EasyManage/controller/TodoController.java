@@ -1,15 +1,19 @@
 package com.hjk.EasyManage.controller;
 
 import com.hjk.EasyManage.dto.todo.TodoRequest;
+import com.hjk.EasyManage.dto.todo.TodoUpdateDto;
 import com.hjk.EasyManage.dto.todo.TodoViewDto;
+import com.hjk.EasyManage.dto.todo.TodoWithUserResponse;
 import com.hjk.EasyManage.entity.Todo;
 import com.hjk.EasyManage.repository.user.UserJpaRepository;
 import com.hjk.EasyManage.service.todo.TodoService;
 import com.hjk.EasyManage.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -73,5 +77,34 @@ public class TodoController {
         todoService.deleteTodo(todoId);
 
         return "redirect:/todo";
+    }
+
+    @GetMapping("/update/{todoId}")
+    public String getUpdateTodoForm(@PathVariable("todoId") Long todoId, HttpSession httpSession, Model model){
+
+        Long loginId = (Long) httpSession.getAttribute("loginId");
+        TodoViewDto byTodoIdWithLoginId = todoService.findByTodoIdWithLoginId(todoId, loginId);
+        TodoUpdateDto updateDto = new TodoUpdateDto();
+
+        updateDto.setId(byTodoIdWithLoginId.getId());
+        updateDto.setContent(byTodoIdWithLoginId.getContent());
+        updateDto.setFinishAt(byTodoIdWithLoginId.getFinishAt());
+
+        model.addAttribute("todoUpdateForm", updateDto);
+
+        return "todo/todoUpdate";
+    }
+
+    @PostMapping("/update")
+    public String updateTodo(@Valid @ModelAttribute("todoUpdateForm") TodoUpdateDto todoUpdateDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "todo/todoUpdate";
+        }
+
+        todoService.updateTodo(todoUpdateDto);
+
+        return "redirect:/todo";
+
+
     }
 }

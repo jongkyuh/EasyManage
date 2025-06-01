@@ -12,4 +12,7 @@ public interface UserService {
     Users findByUserId(Long id);    // 유저아이디로 유저찾기
 
 
+
+
+
 }
