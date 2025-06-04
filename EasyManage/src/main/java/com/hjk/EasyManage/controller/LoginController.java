@@ -44,7 +44,7 @@ public class LoginController {
         }
 
         model.addAttribute("session", httpSession.getAttribute("loginUser"));
-        return "redirect:main";
+        return "redirect:/main";
     }
 
     @GetMapping("/logout")
