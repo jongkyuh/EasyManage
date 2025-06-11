@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>todo수정페이지</title>
+    <link rel="stylesheet" th:href="@{/css/todo/todoUpdate.css}">
 </head>
 <body>
 <form th:action = "@{/todo/update}" th:method="post" th:object="${todoUpdateForm}">

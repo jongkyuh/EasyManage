@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>todo-List</title>
+    <link rel="stylesheet" th:href="@{/css/todo/todo.css}">
 </head>
 <body>
+<div th:replace="layout/header::headerFragment"></div>
 <form method="post" th:action = "@{/todo/inserttodo}"th:object = "${todoForm}">
     <div>
         <label>내용:</label>
@@ -31,7 +33,7 @@
         <td th:text="${todo.completed} ? '완료' : '미완료'" th:style = "${todo.completed} ? 'background-color: #d1ffd1;' : 'background-color: #ffd1d1;'"></td>
         <td th:text="${todo.finishAt}"></td>
         <td>
-            <button class="complete-change-btn" th:data-id="${todo.id}" th:text="${todo.completed ? '비동기완료':'동기완료'}"></button>
+            <button class="complete-change-btn" th:data-id="${todo.id}" th:text="${todo.completed ? '완료':'미완료'}"></button>
         </td>
         <td>
             <button class="delete-btn" th:data-id="${todo.id}" th:text="삭제"></button>

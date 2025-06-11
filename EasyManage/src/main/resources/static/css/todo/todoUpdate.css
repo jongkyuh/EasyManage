@@ -1,0 +1,80 @@
+/* update-todo.css */
+
+/* 기본 스타일 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    color: #333;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh; /* 화면 세로 중앙 배치 */
+}
+
+/* form 박스 스타일 */
+form {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 25px 30px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 각 입력 div 간 간격 */
+form > div {
+    margin-bottom: 18px;
+}
+
+/* label 스타일 */
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #444;
+}
+
+/* 입력 필드 스타일 */
+input[type="text"],
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* 포커스 시 입력창 강조 */
+input[type="text"]:focus,
+input[type="datetime-local"]:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+/* 에러 메시지 스타일 */
+label[style*="color: red"] {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* 제출 버튼 스타일 */
+button[type="submit"] {
+    padding: 10px 0;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2563eb;
+}
