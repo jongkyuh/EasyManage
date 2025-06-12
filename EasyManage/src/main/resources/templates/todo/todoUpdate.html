@@ -7,6 +7,7 @@
 </head>
 <body>
 <form th:action = "@{/todo/update}" th:method="post" th:object="${todoUpdateForm}">
+    <h1 align="center">수정하기</h1>
     <input type="hidden" th:field="*{id}">
     <div>
         <label th:text="내용"></label>
