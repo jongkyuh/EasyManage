@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>카테고리추가페이지</title>
+</head>
+<body>
+<div th:replace="layout/header::headerFragment"></div>
+</body>
+<form th:action="@{/finance/category/create}" th:method="post" th:object="${categoryForm}">
+    <div>
+        <label for="categoryName">카테고리 이름: </label>
+        <input type="text" th:field="*{categoryName}" id="categoryName">
+    </div>
+    <div>
+        <label for="categoryName">카테고리 종류</label>
+        <select th:field="*{FType}">
+            <option th:each="ftype : ${categoryType}"
+                    th:value="${ftype}"
+                    th:text="${ftype.name() == 'INCOME' ? '수입' : '지출'}"></option>
+        </select>
+    </div>
+    <button type="submit">등록하기</button>
+</form>
+</html>

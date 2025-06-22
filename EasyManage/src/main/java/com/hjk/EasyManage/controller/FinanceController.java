@@ -1,10 +1,15 @@
 package com.hjk.EasyManage.controller;
 
+import com.hjk.EasyManage.dto.finance.FinanceCategoryRequest;
+import com.hjk.EasyManage.dto.finance.FinanceCategoryResponse;
+import com.hjk.EasyManage.entity.FinanceType;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,21 +20,36 @@ public class FinanceController {
 
     private final WebClient.Builder webClientBuilder;
     @GetMapping("")
-    public String goFinance(HttpSession httpSession, Model model){
+    public String goFinanceMain(HttpSession httpSession, Model model){
 
-        long loginId = (long) httpSession.getAttribute("loginId");  // 로그인한 아이디값
+       return "finance/financeMain";
+    }
 
-        String username = webClientBuilder
-                .baseUrl("http://localhost:8082/api/finance")
+    @GetMapping("/category/create")
+    public String categoryForm(Model model){
+        model.addAttribute("categoryForm", new FinanceCategoryRequest());
+        model.addAttribute("categoryType", FinanceType.values());
+        return "finance/financeCategoryCreate";
+    }
+
+    @PostMapping("/category/create")
+    public String categorycreate(@ModelAttribute("categoryForm") FinanceCategoryRequest fr, HttpSession httpSession, Model model){
+        long userId = (long) httpSession.getAttribute("loginId");
+        fr.setUserId(userId);
+
+        FinanceCategoryResponse response = webClientBuilder
+                .baseUrl("http://localhost:8083")
                 .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder.queryParam("userId", loginId).build())
+                .post()
+                .uri("/api/finance/create")
+                .bodyValue(fr)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(FinanceCategoryResponse.class)
                 .block();
 
-        model.addAttribute("username",username);
-        return "finance/finance";
+
+        return "finance/financeMain";
+
     }
 
 
