@@ -7,6 +7,7 @@
 <body>
 <div th:replace="layout/header::headerFragment"></div>
 </body>
+
 <form th:action="@{/finance/category/create}" th:method="post" th:object="${categoryForm}">
     <div>
         <label for="categoryName">카테고리 이름: </label>
@@ -14,7 +15,7 @@
     </div>
     <div>
         <label for="categoryName">카테고리 종류</label>
-        <select th:field="*{FType}">
+        <select th:field="*{financeType}">
             <option th:each="ftype : ${categoryType}"
                     th:value="${ftype}"
                     th:text="${ftype.name() == 'INCOME' ? '수입' : '지출'}"></option>
@@ -22,4 +23,47 @@
     </div>
     <button type="submit">등록하기</button>
 </form>
+
+<table>
+    <thead>
+    <tr>
+        <td>카테고리이름</td>
+        <td>카테고리타입</td>
+        <td>카테고리삭제</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category:${categoryList}">
+        <td th:text="${category.categoryName}"></td>
+        <td th:text="${category.financeType.name()} == 'INCOME' ? '수입' : '지출'"></td>
+        <td>
+            <button class="delete-category-btn" th:data-id="${category.categoryId}">삭제</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () =>{
+        document.querySelectorAll(".delete-category-btn").forEach(btn => {
+           btn.addEventListener("click", async() => {
+              const categoryId = btn.dataset.id;
+              const response = await fetch(`/finance/category/delete/${categoryId}`,{
+                 method: "post",
+                 headers: {
+                     'X-Requested-With': 'XMLHttpRequest'
+                 }
+              });
+              if(response.ok){
+                  const row = btn.closest('tr');
+                  row.remove();
+              }else{
+                  alert("정상적으로 삭제되지 못했습니다.");
+              }
+           });
+        });
+
+
+    })
+</script>
 </html>
