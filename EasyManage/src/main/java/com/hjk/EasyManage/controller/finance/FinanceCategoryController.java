@@ -48,7 +48,7 @@ public class FinanceCategoryController {
         model.addAttribute("categoryType", FinanceType.values());
 
 
-        return "finance/financeCategoryCreate";
+        return "finance/financeCategory";
     }
 
     @PostMapping("/category/create")
