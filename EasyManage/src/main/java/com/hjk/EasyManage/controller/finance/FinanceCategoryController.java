@@ -1,7 +1,7 @@
 package com.hjk.EasyManage.controller.finance;
 
-import com.hjk.EasyManage.dto.finance.FinanceCategoryRequest;
-import com.hjk.EasyManage.dto.finance.FinanceCategoryResponse;
+import com.hjk.EasyManage.dto.finance.category.FinanceCategoryRequest;
+import com.hjk.EasyManage.dto.finance.category.FinanceCategoryResponse;
 import com.hjk.EasyManage.entity.FinanceType;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
