@@ -18,7 +18,8 @@
         <select th:field="*{financeType}">
             <option th:each="ftype : ${categoryType}"
                     th:value="${ftype}"
-                    th:text="${ftype.name() == 'INCOME' ? '수입' : '지출'}"></option>
+                    th:text="${ftype.name() == 'INCOME' ? '수입' : '지출'}">
+            </option>
         </select>
     </div>
     <button type="submit">등록하기</button>
